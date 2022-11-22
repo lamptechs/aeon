@@ -130,7 +130,7 @@ class AdminController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try{
         $validator = Validator::make($request->all(),[
@@ -141,7 +141,7 @@ class AdminController extends Controller
             $this->apiOutput($this->getValidationError($validator), 400);
            }
 
-            $admin = Admin::find($id);
+            $admin = Admin::find($request->id);
             $admin->name = $request->name;
             $admin->bio = $request->bio;
             $admin->email = $request->email;
@@ -156,9 +156,9 @@ class AdminController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $admin = Admin::find($id);
+        $admin = Admin::find($request->id);
         $admin->delete();
         $this->apiSuccess();
         return $this->apiOutput("Admin Deleted Successfully", 200);
