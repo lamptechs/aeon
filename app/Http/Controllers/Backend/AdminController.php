@@ -4,24 +4,14 @@ namespace App\Http\Controllers\Backend;
 
 use Exception;
 use Illuminate\Http\Request;
-
-// Added part
-
-use Illuminate\Http\Request;
-use App\Models\Backend\Admin;
-use Illuminate\Auth\RequestGuard;
-use Illuminate\Support\Facades\DB;
 use App\Events\AccountRegistration;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Backend\AdminResource;
-use App\Models\Backend\Admin as BackendAdmin;
-use App\Events\PasswordReset as PasswordResetEvent;
+use App\Models\Admin;
+use App\Models\PasswordReset;
 
 class AdminController extends Controller
 {
@@ -177,85 +167,85 @@ class AdminController extends Controller
     /**
      * Forget Password
      */
-    // public function forgetPassword(Request $request){
-    //     try{
-    //         $validator = Validator::make($request->all(), [
-    //             "email"     => ["required", "exists:admins,email"],
-    //         ],[
-    //             "email.exists"  => "No Record found under this email",
-    //         ]);
+    public function forgetPassword(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                "email"     => ["required", "exists:admins,email"],
+            ],[
+                "email.exists"  => "No Record found under this email",
+            ]);
 
-    //         if($validator->fails()){
-    //             return $this->apiOutput($this->getValidationError($validator), 400);
-    //         }
-    //         $admin = Admin::where("email", $request->email)->first();
-    //         $password_reset = PasswordReset::where("tableable", $admin->getMorphClass())
-    //             ->where("tableable_id", $admin->id)->where("is_used", false)
-    //             ->where("expire_at", ">=", now()->format('Y-m-d H:i:s'))
-    //             ->orderBy("id", "DESC")->first();
-    //         if( empty($password_reset) ){
-    //             $token = rand(111111, 999999);
-    //             $password_reset = new PasswordReset();
-    //             $password_reset->tableable      = $admin->getMorphClass();
-    //             $password_reset->tableable_id   = $admin->id;
-    //             $password_reset->email          = $admin->email;
-    //             $password_reset->token          = $token;
-    //         }
-    //         $password_reset->expire_at      = now()->addHour();
-    //         $password_reset->save();
+            if($validator->fails()){
+                return $this->apiOutput($this->getValidationError($validator), 400);
+            }
+            $admin = Admin::where("email", $request->email)->first();
+            $password_reset = PasswordReset::where("tableable", $admin->getMorphClass())
+                ->where("tableable_id", $admin->id)->where("is_used", false)
+                ->where("expire_at", ">=", now()->format('Y-m-d H:i:s'))
+                ->orderBy("id", "DESC")->first();
+            if( empty($password_reset) ){
+                $token = rand(111111, 999999);
+                $password_reset = new PasswordReset();
+                $password_reset->tableable      = $admin->getMorphClass();
+                $password_reset->tableable_id   = $admin->id;
+                $password_reset->email          = $admin->email;
+                $password_reset->token          = $token;
+            }
+            $password_reset->expire_at      = now()->addHour();
+            $password_reset->save();
 
-    //         // Send Password Reset Email
-    //         event(new PasswordResetEvent($password_reset));
+            // Send Password Reset Email
+            // event(new PasswordResetEvent($password_reset));
 
-    //         $this->apiSuccess("Password Reset Code sent to your registared Email.");
-    //         return $this->apiOutput();
-    //     }catch(Exception $e){
-    //         return $this->apiOutput($this->getError($e), 500);
-    //     }
-    // }
+            $this->apiSuccess("Password Reset Code sent to your registared Email.");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
 
     /**
      * Password Reset
      */
-    // public function passwordReset(Request $request){
-    //     try{
-    //         $validator = Validator::make($request->all(), [
-    //             "email"     => ["required", "exists:admins,email"],
-    //             "code"      => ["required", "exists:password_resets,token"],
-    //             "password"  => ["required", "string"],
-    //         ],[
-    //             "email.exists"  => "No Record found under this email",
-    //             "code.exists"   => "Invalid Verification Code",
-    //         ]);
-    //         if($validator->fails()){
-    //             return $this->apiOutput($this->getValidationError($validator), 400);
-    //         }
+    public function passwordReset(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                "email"     => ["required", "exists:admins,email"],
+                "code"      => ["required", "exists:password_resets,token"],
+                "password"  => ["required", "string"],
+            ],[
+                "email.exists"  => "No Record found under this email",
+                "code.exists"   => "Invalid Verification Code",
+            ]);
+            if($validator->fails()){
+                return $this->apiOutput($this->getValidationError($validator), 400);
+            }
 
-    //         DB::beginTransaction();
-    //         $password_reset = PasswordReset::where("email", $request->email)
-    //             ->where("is_used", false)
-    //             ->where("expire_at", ">=", now()->format('Y-m-d H:i:s'))
-    //             ->first();
-    //         if( empty($password_reset) ){
-    //             return $this->apiOutput($this->getValidationError($validator), 400);
-    //         }
-    //         $password_reset->is_used = true;
-    //         $password_reset->save();
+            DB::beginTransaction();
+            $password_reset = PasswordReset::where("email", $request->email)
+                ->where("is_used", false)
+                ->where("expire_at", ">=", now()->format('Y-m-d H:i:s'))
+                ->first();
+            if( empty($password_reset) ){
+                return $this->apiOutput($this->getValidationError($validator), 400);
+            }
+            $password_reset->is_used = true;
+            $password_reset->save();
 
-    //         $user = $password_reset->user;
-    //         $user->password = bcrypt($request->password);
-    //         $user->save();
+            $user = $password_reset->user;
+            $user->password = bcrypt($request->password);
+            $user->save();
 
-    //         DB::commit();
-    //         try{
-    //             event(new PasswordResetEvent($password_reset, true));
-    //         }catch(Exception $e){
+            DB::commit();
+            try{
+                event(new PasswordResetEvent($password_reset, true));
+            }catch(Exception $e){
 
-    //         }
-    //         $this->apiSuccess("Password Reset Successfully.");
-    //         return $this->apiOutput();
-    //     }catch(Exception $e){
-    //         return $this->apiOutput($this->getError($e), 500);
-    //     }
-    // }
+            }
+            $this->apiSuccess("Password Reset Successfully.");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError($e), 500);
+        }
+    }
 }

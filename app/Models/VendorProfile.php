@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Backend;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerContactPeople extends Model
+class VendorProfile extends Model
 {
     use HasFactory;
 }

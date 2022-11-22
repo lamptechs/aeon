@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Backend;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupAccess extends Model
+class Customer extends Model
 {
     use HasFactory;
 }
