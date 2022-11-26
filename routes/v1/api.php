@@ -41,9 +41,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     /**
      * Admin Section
      */
-    Route::post('/logout', [AdminController::class, "logout"]);
+    Route::get('/list',[AdminController::class,'index']);
+    Route::get('/show', [AdminController::class, 'show']);
+    Route::post('/store',[AdminController::class,'store']);
     Route::post('/admin/update', [AdminController::class, 'update']);
     Route::post('/admin/delete', [AdminController::class, 'destroy']);
+    Route::post('/logout', [AdminController::class, "logout"]);
 
     /**
      * Group Section
