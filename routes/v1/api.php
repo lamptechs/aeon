@@ -23,10 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix("admin")->group(function(){
     Route::get('/login', [AdminController::class, "showLogin"]);
     Route::post('/login', [AdminController::class, "login"]);
-
-    Route::get('/list', [AdminController::class, "index"]);
-    Route::get('/show', [AdminController::class, 'show']);
-    Route::post('/store', [AdminController::class, "store"]);
     Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
     Route::post('/password-reset', [AdminController::class, "passwordReset"]);
 });
@@ -44,8 +40,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
     Route::get('/list',[AdminController::class,'index']);
     Route::get('/show', [AdminController::class, 'show']);
     Route::post('/store',[AdminController::class,'store']);
-    Route::post('/admin/update', [AdminController::class, 'update']);
-    Route::post('/admin/delete', [AdminController::class, 'destroy']);
+    Route::post('/update', [AdminController::class, 'update']);
+    Route::post('/delete', [AdminController::class, 'destroy']);
     Route::post('/logout', [AdminController::class, "logout"]);
 
     /**
