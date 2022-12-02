@@ -43,6 +43,13 @@ class Authenticate extends Middleware
      */
     protected function unauthenticated($request, array $guards)
     {
+        if( in_array("api", $request->route()->computedMiddleware) ){
+            abort(response()->json([
+                "status"    => false,
+                'message'   => 'Unauthenticated',
+            ], 401));    
+        } 
+
         throw new AuthenticationException(
             'Unauthenticated.', $guards, $this->redirectTo($request)
         );
