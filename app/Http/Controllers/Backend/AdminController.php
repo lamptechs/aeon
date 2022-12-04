@@ -33,6 +33,7 @@ class AdminController extends Controller
      */
     public function login(Request $request){
 
+        $admin=Admin::all();
         try{
             $validator = Validator::make($request->all(), [
                 "email"     => ["required", "email", "exists:admins,email"],
@@ -56,7 +57,7 @@ class AdminController extends Controller
             // echo Session::get('access_token');
             $this->apiSuccess("Login Successfully");
             // Flash Admin Group Permission
-            Session::forget("group_access");
+            //Session::forget("group_access");
 
             $this->data = (new AdminResource($admin));
             return $this->apiOutput();

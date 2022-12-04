@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
  * Admin Login Section
  */
 Route::prefix("admin")->group(function(){
-    Route::get('/login', [AdminController::class, "showLogin"]);
+    Route::get('/login', [AdminController::class, "login"]);
     Route::post('/login', [AdminController::class, "login"]);
     Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
     Route::post('/password-reset', [AdminController::class, "passwordReset"]);

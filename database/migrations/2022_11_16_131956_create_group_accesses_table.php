@@ -26,6 +26,7 @@ class CreateGroupAccessesTable extends Migration
             $table->date('modified_date')->nullable();
             $table->string('deleted_by')->nullable();
             $table->date('deleted_date')->nullable();
+            $table->timestamps();
         });
     }
 
