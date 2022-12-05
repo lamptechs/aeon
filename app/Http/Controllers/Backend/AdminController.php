@@ -151,15 +151,13 @@ class AdminController extends Controller
             "password"      => ["required", "string", "min:6"],
             "group_id"      => ["required", "exists:groups,id"],
             "status"        => 'required',
-            ],[
-                "id.exists"           => "No Record under this Admin",
-                "group_id.exists"     => "No Record found under this group",
-            ]);
+          ]
+        );
 
            if ($validator->fails()) {
             $this->apiOutput($this->getValidationError($validator), 400);
            }
-
+           
             $admin = Admin::find($request->id);
             $admin->name = $request->name;
             $admin->bio = $request->bio;
