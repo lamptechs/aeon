@@ -102,15 +102,24 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        try{
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|min:4',
-            ]);
-
+        $validator = Validator::make(
+            $request->all(),
+            [ 
+                "name"          => ["required", "min:4"],
+                "email"         => ["required","email","unique:admins,email"],
+                "password"      => ["required", "string", "min:6"],
+                "group_id"      => ["required", "exists:groups,id"],
+                "status"        => 'required',
+                
+            ],[
+                "group_id.exists"     => "No Record found under this group",
+            ]
+           );
+            
             if ($validator->fails()) {
-                $this->apiOutput($this->getValidationError($validator), 400);
+                return $this->apiOutput($this->getValidationError($validator), 400);
             }
-
+        try{
             $admin = new Admin();
             $admin->name = $request->name;
             $admin->bio = $request->bio;
