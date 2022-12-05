@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Group;
-use App\Http\Resources\GroupResource;
+use App\Http\Resources\Backend\GroupResource;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -20,11 +20,12 @@ class GroupController extends Controller
     public function index()
     {
        try{
-            if(!PermissionController::hasAccess("group_list")){
-                return $this->apiOutput("Permission Missing", 403);
-            }
+        //return 10;
+            // if(!PermissionController::hasAccess("group_list")){
+            //     return $this->apiOutput("Permission Missing", 403);
+            // }
             $this->data = GroupResource::collection(Group::all());
-            $this->apiSuccess("Grouop Loaded Successfully");
+            $this->apiSuccess("Group Loaded Successfully");
             return $this->apiOutput();
 
         }catch(Exception $e){
@@ -53,13 +54,13 @@ class GroupController extends Controller
      
         try{
 
-            if(!PermissionController::hasAccess("group_create")){
-                return $this->apiOutput("Permission Missing", 403);
-            }
+            // if(!PermissionController::hasAccess("group_create")){
+            //     return $this->apiOutput("Permission Missing", 403);
+            // }
 
             $validator = Validator::make( $request->all(),[
-                'name' => 'required|min:4',
-                'description' => 'nullable|min:4',
+                'name'          => ["required", "min:4"],
+                'description'   => ["nullable", "min:4"],
             ]);
                 
             if ($validator->fails()) {    
@@ -88,9 +89,9 @@ class GroupController extends Controller
     public function show(Request $request)
     {
         try{
-            if(!PermissionController::hasAccess("group_show")){
-                return $this->apiOutput("Permission Missing", 403);
-            }
+            // if(!PermissionController::hasAccess("group_show")){
+            //     return $this->apiOutput("Permission Missing", 403);
+            // }
             $group = Group::find($request->id);
             if( empty($group) ){
                 return $this->apiOutput("Patient Data Not Found", 400);
@@ -126,6 +127,7 @@ class GroupController extends Controller
     {
          try{
             $validator = Validator::make($request->all(),[
+                'id'            => 'required',
                 'name'          => ["required", "min:4"],
                 'description'   => ["nullable", "min:4"],
             ]);

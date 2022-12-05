@@ -151,7 +151,10 @@ class AdminController extends Controller
             "password"      => ["required", "string", "min:6"],
             "group_id"      => ["required", "exists:groups,id"],
             "status"        => 'required',
-          ]
+        ],[
+            "id"                  => "No Data Found for this Id",
+            "group_id.exists"     => "No Record found under this group",  
+        ]
         );
 
            if ($validator->fails()) {
@@ -159,6 +162,9 @@ class AdminController extends Controller
            }
            
             $admin = Admin::find($request->id);
+            // if(empty($admin)){
+            //     return $this->apiOutput("No Data Found", $admin);
+            // }
             $admin->name = $request->name;
             $admin->bio = $request->bio;
             $admin->email = $request->email;
