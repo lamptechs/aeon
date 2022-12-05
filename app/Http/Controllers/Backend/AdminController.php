@@ -102,31 +102,32 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [ 
-                "name"          => ["required", "min:4"],
-                "email"         => ["required","email","unique:admins,email"],
-                "password"      => ["required", "string", "min:6"],
-                "group_id"      => ["required", "exists:groups,id"],
-                "status"        => 'required',
-                
-            ],[
-                "group_id.exists"     => "No Record found under this group",
-            ]
-           );
-            
-            if ($validator->fails()) {
-                return $this->apiOutput($this->getValidationError($validator), 400);
-            }
+        
         try{
-            $admin = new Admin();
-            $admin->name = $request->name;
-            $admin->bio = $request->bio;
-            $admin->email = $request->email;
-            $admin->group_id = $request->group_id;
-            $admin->password = !empty($request->password) ? bcrypt($request->password) : $admin->password ;
-            $admin->save();
+            $validator = Validator::make(
+                $request->all(),
+                [ 
+                    "name"          => ["required", "min:4"],
+                    "email"         => ["required","email","unique:admins,email"],
+                    "password"      => ["required", "string", "min:6"],
+                    "group_id"      => ["required", "exists:groups,id"],
+                    "status"        => 'required',
+                    
+                ],[
+                    "group_id.exists"     => "No Record found under this group",
+                ]
+               );
+                
+                if ($validator->fails()) {
+                    return $this->apiOutput($this->getValidationError($validator), 400);
+                }
+                $admin = new Admin();
+                $admin->name = $request->name;
+                $admin->bio = $request->bio;
+                $admin->email = $request->email;
+                $admin->group_id = $request->group_id;
+                $admin->password = !empty($request->password) ? bcrypt($request->password) : $admin->password ;
+                $admin->save();
             try{
                 event(new AccountRegistration($admin));
             }catch(Exception $e){
@@ -144,7 +145,15 @@ class AdminController extends Controller
     {
         try{
         $validator = Validator::make($request->all(),[
-                'name' => 'required|min:4',
+            "id"            => ["required", "exists:admins,id"],
+            "name"          => ["required", "min:4"],
+            "email"         => ["required","email","unique:admins,email"],
+            "password"      => ["required", "string", "min:6"],
+            "group_id"      => ["required", "exists:groups,id"],
+            "status"        => 'required',
+            ],[
+                "id.exists"           => "No Record under this Admin",
+                "group_id.exists"     => "No Record found under this group",
             ]);
 
            if ($validator->fails()) {

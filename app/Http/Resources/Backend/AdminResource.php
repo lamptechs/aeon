@@ -56,6 +56,7 @@ class AdminResource extends JsonResource
         return $this->filter([
             "id"            => $this->id ?? "",
             "name"          => $this->name ?? "",
+            "bio"           => $this->bio ?? "",
             "email"         => $this->email ?? "",
             "groupId"       => $this->group_id ?? "",
             "department"    => isset($this->group_id) ? (new GroupResource($this->groupId))->hide(["created_by", "updated_by"]) : null,
