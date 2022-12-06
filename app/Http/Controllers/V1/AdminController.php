@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\V1;
 
 use Exception;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\Backend\AdminResource;
+use App\Http\Resources\AdminResource;
 use App\Models\Admin;
 use App\Models\PasswordReset;
 

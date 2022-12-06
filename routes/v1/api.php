@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\GroupController;
-use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\V1\AdminController;
+use App\Http\Controllers\V1\GroupController;
+use App\Http\Controllers\V1\PermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

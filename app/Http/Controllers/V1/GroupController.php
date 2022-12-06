@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Group;
-use App\Http\Resources\Backend\GroupResource;
+use App\Http\Resources\GroupResource;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;

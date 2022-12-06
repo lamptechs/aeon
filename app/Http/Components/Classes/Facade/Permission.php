@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Facade;
+namespace App\Http\Components\Classes\Facade;
 
 use App\Http\Components\Classes\Permission as PermissionClass;
 use Illuminate\Support\Facades\Facade;
