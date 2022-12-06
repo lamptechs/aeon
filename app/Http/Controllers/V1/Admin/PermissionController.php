@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\V1\Admin;
 
-use App\Facade\Permission;
+
+use App\Http\Components\Classes\Facade\Permission;
 use App\Http\Controllers\Controller;
 use App\Models\GroupAccess;
 use Exception;
