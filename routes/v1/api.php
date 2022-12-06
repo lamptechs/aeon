@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\GroupController;
-use App\Http\Controllers\V1\PermissionController;
+use App\Http\Controllers\V1\Admin\PermissionController;;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
