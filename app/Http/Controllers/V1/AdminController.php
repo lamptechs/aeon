@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AdminResource;
 use App\Models\Admin;
 use App\Models\PasswordReset;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
