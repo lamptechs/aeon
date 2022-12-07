@@ -143,6 +143,7 @@ class EmailController extends Controller
             }
             
             $template = EmailTemplate::withTrashed()->find($request->id);
+            //$template = EmailTemplate::find($request->id);
             $template_type_use = EmailTemplate::select("email_type")
                 ->where("email_type", "!=", $template->email_type)->pluck("email_type")->toArray();
             $template_type = array_diff($this->template_type, $template_type_use);
