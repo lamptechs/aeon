@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\GroupController;
-use App\Http\Controllers\V1\Admin\PermissionController;;
+use App\Http\Controllers\V1\Admin\PermissionController;
+use App\Http\Controllers\V1\Admin\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [PermissionController::class, "store"]);
         Route::get('/view', [PermissionController::class, "viewGroupPermission"]);
         Route::get('/user-access', [PermissionController::class, "userAccess"]);
+    });
+
+    /**
+     * Email Template
+     */
+    Route::prefix('email-template')->group(function(){
+        Route::get('/list', [EmailController::class, 'index']);
+        Route::get('/create', [EmailController::class, 'create']);
+        Route::post('/create', [EmailController::class, 'store']);
+        Route::post('/update', [EmailController::class, 'update']);
+        Route::get('view', [EmailController::class, 'view']);
+        Route::get('/delete', [EmailController::class, 'delete']);
     });
     
 });
