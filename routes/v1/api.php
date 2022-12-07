@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,16 @@ Route::prefix("admin")->group(function(){
     Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
     Route::post('/password-reset', [AdminController::class, "passwordReset"]);
 });
+
+    /**
+     * Vendor Section
+     */
+    Route::prefix('vendor')->group(function(){
+        Route::get('/show',   [VendorController::class, "show"]);
+        Route::post('/store', [VendorController::class, "store"]);
+        Route::post('/update/{id}', [VendorController::class, "update"]);
+        Route::post('/delete/{id}', [VendorController::class, "destroy"]);
+    });
 
 /********************************************************************************
  * Protect the Route Throw Admin API Token
@@ -64,5 +75,7 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::get('/view', [PermissionController::class, "viewGroupPermission"]);
         Route::get('/user-access', [PermissionController::class, "userAccess"]);
     });
-    
+
+
+
 });
