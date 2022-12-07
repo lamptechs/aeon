@@ -4,7 +4,7 @@ namespace App\Http\Resources\Backend;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class VendorCollection extends ResourceCollection
+class VendorContactPeopleCollection extends ResourceCollection
 {
 
     protected $withoutFields = [];

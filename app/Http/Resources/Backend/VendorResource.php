@@ -6,22 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class VendorResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     */
-    //  @param  \Illuminate\Http\Request  $request
-    //  @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-
-    // public function toArray($request)
-    // {
-    //     //return parent::toArray($request);
-    //     return $this->filter([
-    //         "created_by"  => $this->created_by ? (new AdminResource($this->createdBy)) : null,
-    //         "updated_by"  => $this->updated_by ? (new AdminResource($this->updatedBy)) : null
-    //     ]);
-    // }
-
-    //   my added part
     protected $withoutFields = [];
 
     /**

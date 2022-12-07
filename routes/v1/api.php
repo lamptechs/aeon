@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\VendorContactPeopleController;
 use App\Http\Controllers\Backend\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/store', [VendorController::class, "store"]);
         Route::post('/update/{id}', [VendorController::class, "update"]);
         Route::post('/delete/{id}', [VendorController::class, "destroy"]);
+    });
+
+    /**
+     * Vendor Contact People Section
+     */
+    Route::prefix('vendor_contact')->group(function(){
+        Route::get('/show',   [VendorContactPeopleController::class, "show"]);
+        Route::post('/store', [VendorContactPeopleController::class, "store"]);
+        Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
+        Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
     });
 
 /********************************************************************************
