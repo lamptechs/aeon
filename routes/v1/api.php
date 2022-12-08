@@ -51,7 +51,7 @@ Route::prefix("admin")->group(function(){
     });
 
     /**
-     * Vendor Contact People Section
+     * Vendor Profile Section
      **/
     Route::prefix('vendor_profile')->group(function(){
         Route::get('/show',   [VendorProfileController::class, "show"]);

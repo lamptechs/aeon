@@ -85,11 +85,11 @@ class VendorProfileController extends Controller
     public function show(Request $request)
     {
         try{
-            $vendor = VendorProfile::find($request->id);
-            if( empty($vendor) ){
+            $vendor_profile = VendorProfile::find($request->id);
+            if( empty($vendor_profile) ){
                 return $this->apiOutput("Vendor Profile Data Not Found", 400);
             }
-            $this->data = (new VendorProfileResource ($vendor));
+            $this->data = (new VendorProfileResource ($vendor_profile));
             $this->apiSuccess("Vendor Profile Detail Show Successfully");
             return $this->apiOutput();
         }catch(Exception $e){
@@ -104,12 +104,13 @@ class VendorProfileController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
+                    "vendor_id"                     => ["required"],
                     "factory_profile_name"          => ["required"],
                     "email"                         => ["required","email"],
                     "status"                        => 'required',
 
                 ],[
-                    // "group_id.exists"     => "No Record found under this group",
+
                 ]
                );
 
@@ -117,21 +118,23 @@ class VendorProfileController extends Controller
                     return $this->apiOutput($this->getValidationError($validator), 400);
                 }
                 $vendor_profile = new VendorProfile();
-                $vendor_profile->vendor_id = $request->vendor_id;
-                $vendor_profile->factory_profile_name = $request->factory_profile_name;
-                $vendor_profile->logo  = $request->logo ;
-                $vendor_profile->contact_number  = $request->contact_number ;
-                $vendor_profile->email = $request->email;
-                $vendor_profile->address  = $request->address ;
-                $vendor_profile->remarks  = $request->remarks ;
-                $vendor_profile->status   = $request->status  ;
 
-                $vendor_profile->created_at = $request->created_at;
-                $vendor_profile->updated_at = $request->updated_at;
-                $vendor_profile->deleted_by = $request->deleted_by;
-                $vendor_profile->deleted_date = $request->deleted_date;
+                $vendor_profile->vendor_id            = $request->vendor_id;
+                $vendor_profile->factory_profile_name = $request->factory_profile_name;
+                $vendor_profile->logo                 = $request->logo ;
+                $vendor_profile->contact_number       = $request->contact_number ;
+                $vendor_profile->email                = $request->email;
+                $vendor_profile->address              = $request->address ;
+                $vendor_profile->remarks              = $request->remarks ;
+                $vendor_profile->status               = $request->status  ;
+
+                $vendor_profile->created_at           = $request->created_at;
+                $vendor_profile->updated_at           = $request->updated_at;
+                $vendor_profile->deleted_by           = $request->deleted_by;
+                $vendor_profile->deleted_date         = $request->deleted_date;
+
                 $vendor_profile->save();
-                // $admin->password = !empty($request->password) ? bcrypt($request->password) : $admin->password ;
+
 
             try{
                 event(new AccountRegistration($vendor_profile));
@@ -151,10 +154,10 @@ class VendorProfileController extends Controller
     {
         try{
         $validator = Validator::make($request->all(),[
-            "id"            => ["required"],
-            "name"          => ["required", "min:4"],
-            "email"         => ["required","email"],
-            "status"        => 'required',
+            "vendor_id"                     => ["required"],
+            "factory_profile_name"          => ["required"],
+            "email"                         => ["required","email"],
+            "status"                        => 'required',
         ],[
             // "id"                  => "No Data Found for this Id",
             // "group_id.exists"     => "No Record found under this group",
@@ -169,19 +172,20 @@ class VendorProfileController extends Controller
             // if(empty($admin)){
             //     return $this->apiOutput("No Data Found", $admin);
             // }
-            $vendor_profile->name = $request->name;
-            $vendor_profile->logo = $request->logo;
-            $vendor_profile->address = $request->address;
-            $vendor_profile->email = $request->email;
-            $vendor_profile->contact_number = $request->contact_number;
-            $vendor_profile->remarks = $request->remarks;
-            $vendor_profile->status = $request->status;
-            $vendor_profile->created_at = $request->created_at;
-            $vendor_profile->updated_at = $request->updated_at;
-            $vendor_profile->deleted_by = $request->deleted_by;
-            $vendor_profile->deleted_date = $request->deleted_date;
+            $vendor_profile->vendor_id            = $request->vendor_id;
+            $vendor_profile->factory_profile_name = $request->factory_profile_name;
+            $vendor_profile->logo                 = $request->logo ;
+            $vendor_profile->contact_number       = $request->contact_number ;
+            $vendor_profile->email                = $request->email;
+            $vendor_profile->address              = $request->address ;
+            $vendor_profile->remarks              = $request->remarks ;
+            $vendor_profile->status               = $request->status  ;
 
-            // $admin->password = !empty($request->password) ? bcrypt($request->password) : $admin->password ;
+            $vendor_profile->created_at           = $request->created_at;
+            $vendor_profile->updated_at           = $request->updated_at;
+            $vendor_profile->deleted_by           = $request->deleted_by;
+            $vendor_profile->deleted_date         = $request->deleted_date;;
+
             $vendor_profile->save();
             $this->apiSuccess("Vendor Profile Updated Successfully");
             $this->data = (new VendorProfileResource($vendor_profile));
