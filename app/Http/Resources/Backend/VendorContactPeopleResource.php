@@ -28,7 +28,7 @@ class VendorContactPeopleResource extends JsonResource
      * Collection
      */
     public static function collection($resource){
-        return tap(new AdminResourceCollection($resource), function ($collection) {
+        return tap(new VendorContactPeopleCollection($resource), function ($collection) {
             $collection->collects = __CLASS__;
         });
     }
