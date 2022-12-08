@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\ComplianceAuditController;
 use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\GroupController;
 use App\Http\Controllers\V1\Admin\PermissionController;
@@ -76,6 +77,18 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [EmailController::class, 'update']);
         Route::get('view', [EmailController::class, 'view']);
         Route::get('/delete', [EmailController::class, 'delete']);
+    });
+
+    /**
+     * Compliance Audit
+     */
+    Route::prefix('compliance-audit')->group(function(){
+        //Route::get('/list', [EmailController::class, 'index']);
+       // Route::get('/create', [EmailController::class, 'create']);
+        Route::post('/store', [ComplianceAuditController::class, 'store']);
+        //Route::post('/update', [EmailController::class, 'update']);
+        //Route::get('view', [EmailController::class, 'view']);
+        //Route::get('/delete', [EmailController::class, 'delete']);
     });
     
 });

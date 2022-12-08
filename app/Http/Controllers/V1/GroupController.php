@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\V1\Admin\PermissionController;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Http\Resources\GroupResource;

@@ -13,6 +13,7 @@ use App\Http\Resources\AdminResource;
 use App\Models\Admin;
 use App\Models\PasswordReset;
 use App\Events\PasswordReset as PasswordResetEvent;
+use App\Http\Controllers\V1\Admin\PermissionController;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -59,7 +60,7 @@ class AdminController extends Controller
             // echo Session::get('access_token');
             $this->apiSuccess("Login Successfully");
             // Flash Admin Group Permission
-            //Session::forget("group_access");
+            Session::forget("group_access");
 
             $this->data = (new AdminResource($admin));
             return $this->apiOutput();
@@ -78,6 +79,9 @@ class AdminController extends Controller
     public function index()
     {
         try{
+            // if(!PermissionController::hasAccess("admin_list")){
+            //     return $this->apiOutput("Permission Missing", 403);
+            // }
             $this->data = AdminResource::collection(Admin::all());
             $this->apiSuccess("Admin Load has been Successfully done");
             return $this->apiOutput();
@@ -220,7 +224,7 @@ class AdminController extends Controller
             $password_reset->save();
 
             // Send Password Reset Email
-            // event(new PasswordResetEvent($password_reset));
+             event(new PasswordResetEvent($password_reset));
 
             $this->apiSuccess("Password Reset Code sent to your registared Email.");
             return $this->apiOutput();
