@@ -27,7 +27,7 @@ class VendorProfileResource extends JsonResource
      * Collection
      */
     public static function collection($resource){
-        return tap(new AdminResourceCollection($resource), function ($collection) {
+        return tap(new VendorProfileCollection($resource), function ($collection) {
             $collection->collects = __CLASS__;
         });
     }
