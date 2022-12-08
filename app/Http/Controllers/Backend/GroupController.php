@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Group;
-use App\Http\Resources\GroupResource;
 use Exception;
 use Carbon\Carbon;
+use App\Models\Group;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Backend\GroupResource;
 
 class GroupController extends Controller
 {
@@ -50,7 +50,7 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-     
+
         try{
 
             if(!PermissionController::hasAccess("group_create")){
@@ -61,11 +61,11 @@ class GroupController extends Controller
                 'name' => 'required|min:4',
                 'description' => 'nullable|min:4',
             ]);
-                
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $group = new Group();
             $group->name = $request->name ;
             $group->description = $request->description;
@@ -79,7 +79,7 @@ class GroupController extends Controller
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -129,11 +129,11 @@ class GroupController extends Controller
                 'name'          => ["required", "min:4"],
                 'description'   => ["nullable", "min:4"],
             ]);
-            
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 return $this->apiOutput($this->getValidationError($validator), 400);
             }
-   
+
             $group = Group::find($request->id);
             if(empty($group)){
                 return $this->apiOutput("No Data Found", $group);
@@ -156,7 +156,7 @@ class GroupController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */   
+     */
     public function destroy(Request $request)
     {
         Group::where("id", $request->id)->delete();

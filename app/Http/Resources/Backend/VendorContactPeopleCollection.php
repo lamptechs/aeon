@@ -28,7 +28,7 @@ class VendorContactPeopleCollection extends ResourceCollection
      * Process The Collection
      */
     protected function processCollection($request){
-        return $this->collection->map(function (VendorResource $resource) use ($request) {
+        return $this->collection->map(function (VendorContactPeopleResource $resource) use ($request) {
             return $resource->hide($this->withoutFields)->toArray($request);
         })->all();
     }
