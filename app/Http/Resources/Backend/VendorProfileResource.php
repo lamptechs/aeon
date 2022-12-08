@@ -4,9 +4,8 @@ namespace App\Http\Resources\Backend;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VendorContactPeopleResource extends JsonResource
+class VendorProfileResource extends JsonResource
 {
-
     protected $withoutFields = [];
 
     /**
@@ -28,7 +27,7 @@ class VendorContactPeopleResource extends JsonResource
      * Collection
      */
     public static function collection($resource){
-        return tap(new VendorContactPeopleResource($resource), function ($collection) {
+        return tap(new VendorProfileResource($resource), function ($collection) {
             $collection->collects = __CLASS__;
         });
     }
@@ -44,14 +43,11 @@ class VendorContactPeopleResource extends JsonResource
         return $this->filter([
             "id"            => $this->id ?? "",
             "vendor_id"            => $this->vendor_id ?? "",
-            "employee_id"            => $this->employee_id ?? "",
-            "first_name"          => $this->first_name ?? "",
-            "last_name"          => $this->last_name ?? "",
-            "designation"           => $this->designation ?? "",
-            "department"           => $this->department ?? "",
-            "category"           => $this->category ?? "",
-            "phone"         => $this->phone ?? "",
+            "factory_profile_name"            => $this->factory_profile_name ?? "",
+            "logo"          => $this->logo ?? "",
+            "contact_number"          => $this->contact_number ?? "",
             "email"         => $this->email ?? "",
+            "address"         => $this->address ?? "",
             "remarks"         => $this->remarks ?? "",
             "status"         => $this->status ?? "",
 

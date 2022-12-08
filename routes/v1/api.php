@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\VendorContactPeopleController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,7 @@ Route::prefix("admin")->group(function(){
 
     /**
      * Vendor Section
-     */
+     **/
     Route::prefix('vendor')->group(function(){
         Route::get('/show',   [VendorController::class, "show"]);
         Route::post('/store', [VendorController::class, "store"]);
@@ -41,12 +42,22 @@ Route::prefix("admin")->group(function(){
 
     /**
      * Vendor Contact People Section
-     */
+     **/
     Route::prefix('vendor_contact')->group(function(){
         Route::get('/show',   [VendorContactPeopleController::class, "show"]);
         Route::post('/store', [VendorContactPeopleController::class, "store"]);
         Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
         Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
+    });
+
+    /**
+     * Vendor Contact People Section
+     **/
+    Route::prefix('vendor_profile')->group(function(){
+        Route::get('/show',   [VendorProfileController::class, "show"]);
+        Route::post('/store', [VendorProfileController::class, "store"]);
+        Route::post('/update/{id}', [VendorProfileController::class, "update"]);
+        Route::post('/delete/{id}', [VendorProfileController::class, "destroy"]);
     });
 
 /********************************************************************************
