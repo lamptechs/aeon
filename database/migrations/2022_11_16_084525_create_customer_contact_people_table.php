@@ -14,7 +14,9 @@ class CreateCustomerContactPeopleTable extends Migration
     public function up()
     {
         Schema::create('customer_contact_people', function (Blueprint $table) {
-            $table->id('customer_id');
+
+            $table->id();
+            $table->integer('customer_id');
             $table->integer('employee_id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -26,10 +28,11 @@ class CreateCustomerContactPeopleTable extends Migration
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
-            $table->string('create_by')->nullable();
-            $table->date('create_date')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->date('modified_date')->nullable();
+            $table->string('created_by')->nullable();
+            // $table->date('create_date')->nullable();
+            $table->string('updated_by')->nullable();
+            // $table->date('modified_date')->nullable();
+            $table->timestamps();
             $table->string('deleted_by')->nullable();
             $table->date('deleted_date')->nullable();
         });

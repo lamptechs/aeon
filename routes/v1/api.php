@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CustomerContactPeopleController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
@@ -48,6 +49,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/store',       [CustomerController::class, "store"]);
         Route::post('/update/{id}', [CustomerController::class, "update"]);
         Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
+    });
+    
+      /**
+     * Customer Contact People Section
+     */
+    Route::prefix('customer_contact')->group(function(){
+        Route::get('/show',         [CustomerContactPeopleController::class, "show"]);
+        Route::post('/store',       [CustomerContactPeopleController::class, "store"]);
+        Route::post('/update/{id}', [CustomerContactPeopleController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerContactPeopleController::class, "destroy"]);
     });
 
 
