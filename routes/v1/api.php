@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CustomerContactPeopleController;
 use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\CustomerDepartmentController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\VendorContactPeopleController;
@@ -50,7 +51,7 @@ Route::prefix("admin")->group(function(){
         Route::post('/update/{id}', [CustomerController::class, "update"]);
         Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
     });
-    
+
       /**
      * Customer Contact People Section
      */
@@ -59,6 +60,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/store',       [CustomerContactPeopleController::class, "store"]);
         Route::post('/update/{id}', [CustomerContactPeopleController::class, "update"]);
         Route::post('/delete/{id}', [CustomerContactPeopleController::class, "destroy"]);
+    });
+
+    /**
+     * Customer Department Section
+     */
+    Route::prefix('customer_department')->group(function(){
+        Route::get('/show',         [CustomerDepartmentController::class, "show"]);
+        Route::post('/store',       [CustomerDepartmentController::class, "store"]);
+        Route::post('/update/{id}', [CustomerDepartmentController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerDepartmentController::class, "destroy"]);
     });
 
 
