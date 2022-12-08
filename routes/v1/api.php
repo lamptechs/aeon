@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\VendorContactPeopleController;
@@ -39,14 +40,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/delete/{id}', [VendorController::class, "destroy"]);
     });
 
-    // Vendor Contact People Section
-
-    Route::prefix('vendor_contact')->group(function(){
-        Route::get('/show',   [VendorContactPeopleController::class, "show"]);
-        Route::post('/store', [VendorContactPeopleController::class, "store"]);
-        Route::post('/update/{id}', [VendorContactPeopleController::class, "update"]);
-        Route::post('/delete/{id}', [VendorContactPeopleController::class, "destroy"]);
+    /**
+     * Customer Section
+     */
+    Route::prefix('customer')->group(function(){
+        Route::get('/show',         [CustomerController::class, "show"]);
+        Route::post('/store',       [CustomerController::class, "store"]);
+        Route::post('/update/{id}', [CustomerController::class, "update"]);
+        Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
     });
+
 
 /********************************************************************************
  * Protect the Route Throw Admin API Token

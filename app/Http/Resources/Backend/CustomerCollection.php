@@ -4,9 +4,8 @@ namespace App\Http\Resources\Backend;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class VendorContactPeopleCollection extends ResourceCollection
+class CustomerCollection extends ResourceCollection
 {
-
     protected $withoutFields = [];
 
     /**
@@ -28,7 +27,7 @@ class VendorContactPeopleCollection extends ResourceCollection
      * Process The Collection
      */
     protected function processCollection($request){
-        return $this->collection->map(function (VendorContactPeopleResource $resource) use ($request) {
+        return $this->collection->map(function (CustomerResource $resource) use ($request) {
             return $resource->hide($this->withoutFields)->toArray($request);
         })->all();
     }

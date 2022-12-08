@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use Exception;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use Illuminate\Support\Facades\DB;
 use App\Events\AccountRegistration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Backend\AdminResource;
-use App\Models\Admin;
-use App\Models\PasswordReset;
 
 class AdminController extends Controller
 {
