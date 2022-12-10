@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CertificateController;
 use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\GlobalCertificateController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\VendorContactPeopleController;
@@ -59,6 +60,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/store',       [CertificateController::class, "store"]);
         Route::post('/update/{id}', [CertificateController::class, "update"]);
         Route::post('/delete/{id}', [CertificateController::class, "destroy"]);
+    });
+
+    /**
+     *Global Certificate Section
+     */
+    Route::prefix('global_certificate')->group(function(){
+        Route::get('/show',         [GlobalCertificateController::class, "show"]);
+        Route::post('/store',       [GlobalCertificateController::class, "store"]);
+        Route::post('/update/{id}', [GlobalCertificateController::class, "update"]);
+        Route::post('/delete/{id}', [GlobalCertificateController::class, "destroy"]);
     });
 
 
