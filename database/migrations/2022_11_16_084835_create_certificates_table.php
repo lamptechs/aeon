@@ -13,11 +13,10 @@ class CreateCertificatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('certificates', function (Blueprint $table) {
+        Schema::create('vendor_certificates', function (Blueprint $table) {
             $table->id();
             $table->integer('vendor_id');
-            $table->string('name')->nullable();
-            $table->string('logo')->nullable();
+            $table->integer('global_certificate_id');
             $table->date('issue_date')->nullable();
             $table->dateTime('validity_start_date')->nullable();
             $table->dateTime('validity_end_date')->nullable();
@@ -28,12 +27,14 @@ class CreateCertificatesTable extends Migration
 
             $table->string('remarks')->nullable();
             $table->enum('status',["Active","Inactive","Pending","Cencle","Delete"]);
-            $table->string('create_by')->nullable();
-            $table->date('create_date')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->date('modified_date')->nullable();
+            $table->string('created_by')->nullable();
+            // $table->date('create_date')->nullable();
+            $table->string('updated_by')->nullable();
+            // $table->date('modified_date')->nullable();
+            $table->timestamps();
             $table->string('deleted_by')->nullable();
             $table->date('deleted_date')->nullable();
+            
         });
     }
 

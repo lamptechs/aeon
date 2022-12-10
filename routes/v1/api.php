@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CertificateController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\GroupController;
 use App\Http\Controllers\Backend\PermissionController;
@@ -48,6 +49,16 @@ Route::prefix("admin")->group(function(){
         Route::post('/store',       [CustomerController::class, "store"]);
         Route::post('/update/{id}', [CustomerController::class, "update"]);
         Route::post('/delete/{id}', [CustomerController::class, "destroy"]);
+    });
+
+    /**
+     *Vendor Certificate Section
+     */
+    Route::prefix('vendor_certificate')->group(function(){
+        Route::get('/show',         [CertificateController::class, "show"]);
+        Route::post('/store',       [CertificateController::class, "store"]);
+        Route::post('/update/{id}', [CertificateController::class, "update"]);
+        Route::post('/delete/{id}', [CertificateController::class, "destroy"]);
     });
 
 
