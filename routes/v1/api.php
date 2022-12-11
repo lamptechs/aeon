@@ -89,6 +89,8 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ComplianceAuditController::class, 'update']);
         Route::get('view', [ComplianceAuditController::class, 'show']);
         Route::post('/delete', [ComplianceAuditController::class, 'delete']);
+        Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
+        Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
     });
     
 });
