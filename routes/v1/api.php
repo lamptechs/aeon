@@ -83,12 +83,12 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
      * Compliance Audit
      */
     Route::prefix('compliance-audit')->group(function(){
-        //Route::get('/list', [EmailController::class, 'index']);
-       // Route::get('/create', [EmailController::class, 'create']);
+
+        Route::get('/list', [ComplianceAuditController::class, 'index']);
         Route::post('/store', [ComplianceAuditController::class, 'store']);
-        //Route::post('/update', [EmailController::class, 'update']);
-        //Route::get('view', [EmailController::class, 'view']);
-        //Route::get('/delete', [EmailController::class, 'delete']);
+        Route::post('/update', [ComplianceAuditController::class, 'update']);
+        Route::get('view', [ComplianceAuditController::class, 'show']);
+        Route::post('/delete', [ComplianceAuditController::class, 'delete']);
     });
     
 });
