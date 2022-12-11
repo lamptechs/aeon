@@ -159,4 +159,34 @@ class ComplianceAuditController extends Controller
         return $this->apiOutput("ComplianceAudit Deleted Successfully", 200);
     }
 
+
+
+    public function updateTicketFileInfo(Request $request){
+        try{
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required", "exists:ticket_uploads,id"],
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+
+            $data = TicketUpload::find($request->id);
+            
+            if($request->hasFile('picture')){
+                $data->file_url = $this->uploadFile($request, 'picture', $this->ticket_uploads, null,null,$data->file_url);
+            }
+
+            $data->save();
+          
+            $this->apiSuccess("Ticket File Updated Successfully");
+            return $this->apiOutput();
+           
+           
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
 }
