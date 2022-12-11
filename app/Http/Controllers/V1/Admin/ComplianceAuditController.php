@@ -9,6 +9,8 @@ use App\Models\ComplianceAudit;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ComplianceAuditResource;
 use App\Models\Compliance;
+use App\Models\ComplianceAuditUpload;
+use Illuminate\Support\Facades\DB;
 
 class ComplianceAuditController extends Controller
 {
@@ -40,6 +42,7 @@ class ComplianceAuditController extends Controller
             if ($validator->fails()) {    
                 $this->apiOutput($this->getValidationError($validator), 400);
             }
+            DB::beginTransaction();
    
             $complianceAudit = new Compliance();
             $complianceAudit->factory_name = $request->factory_name;
@@ -55,12 +58,31 @@ class ComplianceAuditController extends Controller
             $complianceAudit->requirement_details = $request->requirement_details;
             $complianceAudit->note_remarks = $request->note_remarks;
             $complianceAudit->save();
+            $this->saveFileInfo($request, $complianceAudit);
+            DB::commit();
             $this->apiSuccess();
             $this->data = (new ComplianceAuditResource($complianceAudit ));
             return $this->apiOutput("Compilance Audit Added Successfully");
 
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+    // Save File Info
+    public function saveFileInfo($request, $complianceAudit){
+        $file_path = $this->uploadFile($request, 'file', $this->compliance_uploads, 720);
+  
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new ComplianceAuditUpload();
+            $data->complianceaudit_id = $complianceAudit->id;
+            $data->file_name    = $request->file_name ?? "Compliance Upload";
+            $data->file_url     = $path;
+            $data->save();
+            return;
         }
     }
 

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Compliance extends Model
 {
     use HasFactory;
+    public function fileInfo(){
+        return $this->hasMany(ComplianceAuditUpload::class, 'complianceaudit_id');
+    }
 }

@@ -44,6 +44,7 @@ class ComplianceAuditResource extends JsonResource
             "audit_request_date"            => $this->audit_request_date,
             "requirement_date"              => $this->requirement_date,
             "requirement_details"           => $this->requirement_details,
+            "upload_files"                  => ComplianceAuditUploadResource::collection($this->fileInfo),
             "note_remarks"                  => $this->note_remarks,
         ]);
     }
