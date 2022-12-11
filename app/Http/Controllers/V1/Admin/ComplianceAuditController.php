@@ -189,4 +189,29 @@ class ComplianceAuditController extends Controller
         }
     }
 
+
+
+    public function deleteFileTicket(Request $request){
+        try{
+            if(!PermissionController::hasAccess("deleteFileTicket")){
+                return $this->apiOutput("Permission Missing", 403);
+            }
+            $validator = Validator::make( $request->all(),[
+                "id"            => ["required", "exists:ticket_uploads,id"],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->apiOutput($this->getValidationError($validator), 200);
+            }
+    
+           
+            $ticketupload=TicketUpload::where('id',$request->id);
+            $ticketupload->delete();
+            $this->apiSuccess("Ticket File Deleted successfully");
+            return $this->apiOutput();
+        }catch(Exception $e){
+            return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
 }
