@@ -124,6 +124,6 @@ class InspectionController extends Controller
     {
         Inspection::where("id", $request->id)->delete();
         $this->apiSuccess();
-        return $this->apiOutput("Group Deleted Successfully", 200);
+        return $this->apiOutput("Inspection Deleted Successfully", 200);
     }
 }
