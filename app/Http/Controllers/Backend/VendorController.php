@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+namespace App\Traits;
 
+use App\Http\Components\Traits\Upload;
+use Exception;
+use App\Models\Vendor;
+use App\Models\VendorUpload;
+use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use Illuminate\Support\Facades\DB;
 use App\Events\AccountRegistration;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Backend\VendorResource;
-use App\Models\Vendor;
-use App\Models\PasswordReset;
+use Intervention\Image\Facades\Image;
 use App\Models\Vendor as ModelsVendor;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Backend\VendorResource;
+
 
 class VendorController extends Controller
 {
+    // use uploadFile;
 
      /**
      * Show Login
@@ -121,7 +128,24 @@ class VendorController extends Controller
                 }
                 $vendor = new Vendor();
                 $vendor->name = $request->name;
-                $vendor->logo = $request->logo;
+              //$vendor->logo = $request->logo;
+
+                if($request->hasFile('picture')){
+                    //$vendor->logo = $this->uploadFile($request, 'picture', $this->vendor_uploads , null,null,$vendor->logo);
+                    $vendor->logo = $this->uploadFile($request, 'picture', $this->vendor_uploads , null,null,$vendor->logo);
+                }
+
+
+                // image insert
+
+                // if($request->file('logo')){
+                //     $file= $request->file('logo');
+
+                //     $filename= 'storage/uploads/vendor/'.$file->getClientOriginalName();
+                //     $file-> move(public_path('public/Image'), $filename);
+                //     $vendor['logo']= $filename;
+                // }
+
                 $vendor->address = $request->address;
                 $vendor->email = $request->email;
                 $vendor->contact_number = $request->contact_number;
@@ -131,8 +155,9 @@ class VendorController extends Controller
                 $vendor->updated_at = $request->updated_at;
                 $vendor->deleted_by = $request->deleted_by;
                 $vendor->deleted_date = $request->deleted_date;
-                // $admin->password = !empty($request->password) ? bcrypt($request->password) : $admin->password ;
+
                 $vendor->save();
+                // $this->saveFileInfo($request, $vendor);
 
             try{
                 event(new AccountRegistration($vendor));
@@ -147,6 +172,7 @@ class VendorController extends Controller
             return $this->apiOutput($this->getError( $e), 500);
         }
     }
+
 
     public function update(Request $request,$id)
     {
@@ -172,6 +198,15 @@ class VendorController extends Controller
             // }
             $vendor->name = $request->name;
             $vendor->logo = $request->logo;
+
+            // if($request->file('logo')){
+            //     $file= $request->file('logo');
+
+            //     $filename= 'storage/uploads/vendor/'.$file->getClientOriginalName();
+            //     $file-> move(public_path('public/Image'), $filename);
+            //     $vendor['logo']= $filename;
+            // }
+
             $vendor->address = $request->address;
             $vendor->email = $request->email;
             $vendor->contact_number = $request->contact_number;
@@ -284,4 +319,76 @@ class VendorController extends Controller
             return $this->apiOutput($this->getError($e), 500);
         }
     }
+       /*
+     * ---------------------------------------------
+     * Upload an Image
+     * Change Image height and width
+     * Send the null value in height or width to keep
+     * the Image Orginal Ratio.
+     * ---------------------------------------------
+     */
+    // protected function uploadFile($request, $fileName, $dir, $width = null, $height =  null, $oldFile = ""){
+    //     if(!$request->hasFile($fileName)){
+    //         return $oldFile;
+    //     }
+    //     $this->CheckDir($dir);
+    //     $this->RemoveFile($oldFile);
+
+    //     ini_set('memory_limit', '1024M');
+    //     $path_arr = [];
+
+    //     if(is_array($request->$fileName) ){
+    //         foreach($request->$fileName as $key => $file){
+    //             $file = $request->file($fileName)[$key];
+    //             $filename = $fileName.'_'.time().$key.'.'.$file->getClientOriginalExtension();
+    //             $path = $dir.$filename;
+
+    //             if( $this->isImage($path) ){
+    //                 if( empty($height) && empty($width)){
+    //                     Image::make($file)->save($path);
+    //                 }
+    //                 elseif( empty($height) && !empty($width) ){
+    //                     Image::make($file)->resize($width,null,function($constant){
+    //                         $constant->aspectRatio();
+    //                     })->save($path);
+    //                 }
+    //                 elseif( !empty($height) && empty($width) ){
+    //                     Image::make($file)->resize(null,$height,function($constant){
+    //                         $constant->aspectRatio();
+    //                     })->save($path);
+    //                 }
+    //                 else{
+    //                     Image::make($file)->resize($width,$height)->save($path);
+    //                 }
+    //             }else{
+    //                 $_dir = trim(str_replace("storage/", "", $dir), "/");
+    //                 $path = "storage/".Storage::disk("public")->putFile($_dir, $file);
+    //             }
+    //             $path_arr[] = $path;
+    //         }
+    //     }else{
+    //         $image = $request->file($fileName);
+    //         $filename = $fileName.'_'.time().'.'.$image->getClientOriginalExtension();
+    //         $path = $dir.$filename;
+
+    //         if( empty($height) && empty($width)){
+    //             Image::make($image)->save($path);
+    //         }
+    //         elseif( empty($height) && !empty($width) ){
+    //             Image::make($image)->resize($width,null,function($constant){
+    //                 $constant->aspectRatio();
+    //             })->save($path);
+    //         }
+    //         elseif( !empty($height) && empty($width) ){
+    //             Image::make($image)->resize(null,$height,function($constant){
+    //                 $constant->aspectRatio();
+    //             })->save($path);
+    //         }
+    //         else{
+    //             Image::make($image)->resize($width,$height)->save($path);
+    //         }
+    //         $path_arr   = $path;
+    //     }
+    //     return $path_arr;
+    // }
 }
