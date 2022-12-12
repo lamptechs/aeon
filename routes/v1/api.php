@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\GroupController;
 use App\Http\Controllers\V1\Admin\PermissionController;
 use App\Http\Controllers\V1\Admin\EmailController;
+use App\Http\Controllers\V1\Admin\InspectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -91,6 +92,20 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/delete', [ComplianceAuditController::class, 'delete']);
         Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
         Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
+    });
+
+
+     /**
+     * Inspection
+     */
+    Route::prefix('inspection')->group(function(){
+
+        Route::get('/list', [InspectionController::class, 'index']);
+        Route::post('/store', [InspectionController::class, 'store']);
+        Route::post('/update', [InspectionController::class, 'update']);
+        Route::get('/show', [InspectionController::class, 'show']);
+        Route::post('/delete', [InspectionController::class, 'delete']);
+        
     });
     
 });
