@@ -82,7 +82,7 @@ class ComplianceAuditController extends Controller
             $data->file_name    = $request->file_name ?? "Compliance Upload";
             $data->file_url     = $path;
             $data->save();
-            return;
+            
         }
     }
 

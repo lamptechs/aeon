@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ManualPoResource;
 use App\Models\ManualPo;
+use App\Models\PoPictureGarments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -59,6 +60,7 @@ class ManualPoController extends Controller
             $manualpo->fabric_quality = $request->fabric_quality;
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->save();
+            $this->saveFileInfo($request, $manualpo);
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -66,6 +68,25 @@ class ManualPoController extends Controller
 
         }catch(Exception $e){
             return $this->apiOutput($this->getError( $e), 500);
+        }
+    }
+
+
+    // Save File Info
+    public function saveFileInfo($request, $manualpo){
+        $file_path = $this->uploadFile($request, 'file', $this->pogarments_uploads, 720);
+  
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new PoPictureGarments();
+            $data->po_id = $manualpo->id;
+            $data->file_name    = $request->file_name ?? "PO_Picture_Garments Upload";
+            $data->file_url     = $path;
+            $data->type = $request->type;
+            $data->save();
+           
         }
     }
 
@@ -142,6 +163,6 @@ class ManualPoController extends Controller
         return $this->apiOutput("ManualPo Deleted Successfully", 200);
     }
 
-    
+
     
 }

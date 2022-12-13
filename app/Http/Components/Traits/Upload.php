@@ -22,6 +22,7 @@ trait Upload{
     protected  $appointment_uploads = "storage/uploads/appointment/";
     protected  $ticket_uploads = "storage/uploads/ticket/";
     protected  $compliance_uploads = "storage/uploads/compliance/";
+    protected  $pogarments_uploads = "storage/uploads/pogarments/";
     protected  $admin_profile = "storage/uploads/admin/profile";
     protected  $logo_dir = "storage/uploads/logo";
     protected  $others_dir = "storage/uploads/others";
