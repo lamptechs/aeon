@@ -38,7 +38,7 @@ class InspectionController extends Controller
             }
             
    
-            $inspection = Inspection::find($request->id);
+            $inspection = new Inspection();
             $inspection->meeting_name = $request->meeting_name;
             $inspection->po_number = $request->po_number;
             $inspection->vendor_id = $request->vendor_id;
