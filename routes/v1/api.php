@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\GroupController;
 use App\Http\Controllers\V1\Admin\PermissionController;
 use App\Http\Controllers\V1\Admin\EmailController;
 use App\Http\Controllers\V1\Admin\InspectionController;
+use App\Http\Controllers\V1\Admin\ManualPoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -105,6 +106,21 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [InspectionController::class, 'update']);
         Route::get('/show', [InspectionController::class, 'show']);
         Route::post('/delete', [InspectionController::class, 'delete']);
+        
+    });
+
+
+    /**
+     * Manual Po
+     */
+
+    Route::prefix('manual_po')->group(function(){
+
+        Route::get('/list', [ManualPoController::class, 'index']);
+        Route::post('/store', [ManualPoController::class, 'store']);
+        Route::post('/update', [ManualPoController::class, 'update']);
+        Route::get('/show', [ManualPoController::class, 'show']);
+        Route::post('/delete', [ManualPoController::class, 'delete']);
         
     });
     
