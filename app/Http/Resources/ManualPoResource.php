@@ -50,6 +50,7 @@ class ManualPoResource extends JsonResource
             "created_at"                => $this->created_at ?? null,
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
+            "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
 
 
         ]);

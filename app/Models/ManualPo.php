@@ -11,4 +11,8 @@ class ManualPo extends Model
     public function fileInfo(){
         return $this->hasMany(PoPictureGarments::class, 'po_id');
     }
+
+    public function fileInfoArt(){
+        return $this->hasMany(PoArtwork::class, 'po_id');
+    }
 }

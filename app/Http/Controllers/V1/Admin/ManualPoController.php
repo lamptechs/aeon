@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ManualPoResource;
 use App\Models\ManualPo;
+use App\Models\PoArtwork;
 use App\Models\PoPictureGarments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,7 @@ class ManualPoController extends Controller
             $manualpo->fabric_content = $request->fabric_content;
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
+            $this->saveExtraFileInfo($request, $manualpo);
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
@@ -85,6 +87,25 @@ class ManualPoController extends Controller
             $data->file_name    = $request->file_name ?? "PO_Picture_Garments Upload";
             $data->file_url     = $path;
             $data->type = $request->type;
+            $data->save();
+           
+        }
+    }
+
+
+    // Save Extra File Info
+    public function saveExtraFileInfo($request, $manualpo){
+        $file_path = $this->uploadFile($request, 'poArtwork', $this->poartworks_uploads, 720);
+  
+        if( !is_array($file_path) ){
+            $file_path = (array) $file_path;
+        }
+        foreach($file_path as $path){
+            $data = new PoArtwork();
+            $data->po_id = $manualpo->id;
+            $data->file_name    = $request->file_name ?? "PO_Art_Works Upload";
+            $data->file_url     = $path;
+            $data->type = $request->typeArtwork;
             $data->save();
            
         }
