@@ -7,6 +7,8 @@ use App\Http\Controllers\V1\Admin\PermissionController;
 use App\Http\Controllers\V1\Admin\EmailController;
 use App\Http\Controllers\V1\Admin\InspectionController;
 use App\Http\Controllers\V1\Admin\ManualPoController;
+use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Models\ManualPoDeliveryDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -121,6 +123,21 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/update', [ManualPoController::class, 'update']);
         Route::get('/show', [ManualPoController::class, 'show']);
         Route::post('/delete', [ManualPoController::class, 'delete']);
+        
+    });
+
+
+    /**
+     * Manual Po Delivery Details
+     */
+
+     Route::prefix('manual_po_delivery_details')->group(function(){
+
+        Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
+        Route::post('/store', [ManualPoDeliveryDetailsController::class, 'store']);
+        // Route::post('/update', [ManualPoController::class, 'update']);
+        // Route::get('/show', [ManualPoController::class, 'show']);
+        // Route::post('/delete', [ManualPoController::class, 'delete']);
         
     });
     

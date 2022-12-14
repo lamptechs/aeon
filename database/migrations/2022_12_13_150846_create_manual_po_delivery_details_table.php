@@ -15,6 +15,13 @@ class CreateManualPoDeliveryDetailsTable extends Migration
     {
         Schema::create('manual_po_delivery_details', function (Blueprint $table) {
             $table->id();
+            $table->string("ship_method");
+            $table->string("inco_terms");
+            $table->string("landing_port");
+            $table->string("discharge_port");
+            $table->string("country_of_origin");
+            $table->date("ex_factor_date");
+            $table->date("care_label_date");
             $table->timestamps();
         });
     }
