@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\Admin\EmailController;
 use App\Http\Controllers\V1\Admin\InspectionController;
 use App\Http\Controllers\V1\Admin\ManualPoController;
 use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Http\Controllers\V1\Admin\ManualPoItemDetailsController;
 use App\Models\ManualPoDeliveryDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -135,9 +136,24 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
         Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
         Route::post('/store', [ManualPoDeliveryDetailsController::class, 'store']);
-        // Route::post('/update', [ManualPoController::class, 'update']);
-        // Route::get('/show', [ManualPoController::class, 'show']);
-        // Route::post('/delete', [ManualPoController::class, 'delete']);
+        Route::post('/update', [ManualPoDeliveryDetailsController::class, 'update']);
+        Route::get('/show', [ManualPoDeliveryDetailsController::class, 'show']);
+        Route::post('/delete', [ManualPoDeliveryDetailsController::class, 'delete']);
+        
+    });
+
+
+    /**
+     * Manual Po Delivery Details
+     */
+
+     Route::prefix('manual_po_item_details')->group(function(){
+
+        Route::get('/list', [ManualPoItemDetailsController::class, 'index']);
+        Route::post('/store', [ManualPoItemDetailsController::class, 'store']);
+        Route::post('/update', [ManualPoItemDetailsController::class, 'update']);
+        Route::get('/show', [ManualPoItemDetailsController::class, 'show']);
+        Route::post('/delete', [ManualPoItemDetailsController::class, 'delete']);
         
     });
     

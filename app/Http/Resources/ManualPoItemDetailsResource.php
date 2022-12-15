@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ManualPoDeliveryDetailsResource extends JsonResource
+class ManualPoItemDetailsResource extends JsonResource
 {
     protected $withoutFields = [];
 
@@ -33,13 +33,16 @@ class ManualPoDeliveryDetailsResource extends JsonResource
     {
         return $this->filter([
             "id"                        => $this->id ?? "",
-            "ship_method"               => $this->ship_method ?? "",
-            "inco_terms"                => $this->inco_terms ?? "",
-            "landing_port"              => $this->landing_port ?? "",
-            "discharge_port"            => $this->discharge_port ?? "",
-            "country_of_origin"         => $this->country_of_origin ?? "",
-            "ex_factor_date"            => $this->ex_factor_date ?? "",
-            "care_label_date"           => $this->care_label_date ?? "",
+            "plm"                       => $this->plm ?? "",
+            "style_no"                  => $this->style_no ?? "",
+            "colour"                    => $this->colour ?? "",
+            "item_no"                   => $this->item_no ?? "",
+            "size"                      => $this->size ?? "",
+            "qty_order"                 => $this->qty_order ?? "",
+            "inner_qty"                 => $this->inner_qty ?? "",
+            "outer_case_qty"            => $this->outer_case_qty ?? "",
+            "value"                     => $this->value ?? "",
+            "selling_price"             => $this->selling_price ?? "",
             "created_at"                => $this->created_at ?? "",
             "updated_at"                => $this->updated_at ?? "",
         ]);
