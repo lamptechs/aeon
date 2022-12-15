@@ -135,9 +135,9 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
 
         Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
         Route::post('/store', [ManualPoDeliveryDetailsController::class, 'store']);
-        // Route::post('/update', [ManualPoController::class, 'update']);
-        // Route::get('/show', [ManualPoController::class, 'show']);
-        // Route::post('/delete', [ManualPoController::class, 'delete']);
+        Route::post('/update', [ManualPoDeliveryDetailsController::class, 'update']);
+        Route::get('/show', [ManualPoDeliveryDetailsController::class, 'show']);
+        Route::post('/delete', [ManualPoDeliveryDetailsController::class, 'delete']);
         
     });
     
