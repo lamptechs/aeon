@@ -1,8 +1,14 @@
 <?php
 
-use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\GroupController;
-use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\V1\Admin\ComplianceAuditController;
+use App\Http\Controllers\V1\AdminController;
+use App\Http\Controllers\V1\GroupController;
+use App\Http\Controllers\V1\Admin\PermissionController;
+use App\Http\Controllers\V1\Admin\EmailController;
+use App\Http\Controllers\V1\Admin\InspectionController;
+use App\Http\Controllers\V1\Admin\ManualPoController;
+use App\Http\Controllers\V1\Admin\ManualPoDeliveryDetailsController;
+use App\Models\ManualPoDeliveryDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +27,7 @@ use Illuminate\Support\Facades\Route;
  * Admin Login Section
  */
 Route::prefix("admin")->group(function(){
-    Route::get('/login', [AdminController::class, "showLogin"]);
+    Route::get('/login', [AdminController::class, "login"]);
     Route::post('/login', [AdminController::class, "login"]);
     Route::post('/forget-password', [AdminController::class, "forgetPassword"]);
     Route::post('/password-reset', [AdminController::class, "passwordReset"]);
@@ -63,6 +69,76 @@ Route::middleware(["auth:admin"])->prefix('admin')->group(function(){
         Route::post('/store', [PermissionController::class, "store"]);
         Route::get('/view', [PermissionController::class, "viewGroupPermission"]);
         Route::get('/user-access', [PermissionController::class, "userAccess"]);
+    });
+
+    /**
+     * Email Template
+     */
+    Route::prefix('email-template')->group(function(){
+        Route::get('/list', [EmailController::class, 'index']);
+        Route::get('/create', [EmailController::class, 'create']);
+        Route::post('/create', [EmailController::class, 'store']);
+        Route::post('/update', [EmailController::class, 'update']);
+        Route::get('view', [EmailController::class, 'view']);
+        Route::get('/delete', [EmailController::class, 'delete']);
+    });
+
+    /**
+     * Compliance Audit
+     */
+    Route::prefix('compliance-audit')->group(function(){
+
+        Route::get('/list', [ComplianceAuditController::class, 'index']);
+        Route::post('/store', [ComplianceAuditController::class, 'store']);
+        Route::post('/update', [ComplianceAuditController::class, 'update']);
+        Route::get('view', [ComplianceAuditController::class, 'show']);
+        Route::post('/delete', [ComplianceAuditController::class, 'delete']);
+        Route::post('/updateFile', [ComplianceAuditController::class, 'updateComplianceFileInfo']);
+        Route::post('/deleteFile', [ComplianceAuditController::class, 'deleteFileCompliance']);
+    });
+
+
+     /**
+     * Inspection
+     */
+    Route::prefix('inspection')->group(function(){
+
+        Route::get('/list', [InspectionController::class, 'index']);
+        Route::post('/store', [InspectionController::class, 'store']);
+        Route::post('/update', [InspectionController::class, 'update']);
+        Route::get('/show', [InspectionController::class, 'show']);
+        Route::post('/delete', [InspectionController::class, 'delete']);
+        
+    });
+
+
+    /**
+     * Manual Po
+     */
+
+    Route::prefix('manual_po')->group(function(){
+
+        Route::get('/list', [ManualPoController::class, 'index']);
+        Route::post('/store', [ManualPoController::class, 'store']);
+        Route::post('/update', [ManualPoController::class, 'update']);
+        Route::get('/show', [ManualPoController::class, 'show']);
+        Route::post('/delete', [ManualPoController::class, 'delete']);
+        
+    });
+
+
+    /**
+     * Manual Po Delivery Details
+     */
+
+     Route::prefix('manual_po_delivery_details')->group(function(){
+
+        Route::get('/list', [ManualPoDeliveryDetailsController::class, 'index']);
+        Route::post('/store', [ManualPoDeliveryDetailsController::class, 'store']);
+        // Route::post('/update', [ManualPoController::class, 'update']);
+        // Route::get('/show', [ManualPoController::class, 'show']);
+        // Route::post('/delete', [ManualPoController::class, 'delete']);
+        
     });
     
 });

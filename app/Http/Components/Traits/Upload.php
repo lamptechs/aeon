@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
+
 trait Upload{
     /*
      * Define Directories
@@ -20,6 +21,9 @@ trait Upload{
     protected  $therapist_uploads = "storage/uploads/therapist/";
     protected  $appointment_uploads = "storage/uploads/appointment/";
     protected  $ticket_uploads = "storage/uploads/ticket/";
+    protected  $compliance_uploads = "storage/uploads/compliance/";
+    protected  $pogarments_uploads = "storage/uploads/pogarments/";
+    protected  $poartworks_uploads = "storage/uploads/poartworks/";
     protected  $admin_profile = "storage/uploads/admin/profile";
     protected  $logo_dir = "storage/uploads/logo";
     protected  $others_dir = "storage/uploads/others";
