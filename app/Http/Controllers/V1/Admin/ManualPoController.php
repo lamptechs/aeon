@@ -147,7 +147,7 @@ class ManualPoController extends Controller
             }
             DB::beginTransaction();
    
-            $manualpo = ManualPo::find($request->id);;
+            $manualpo = ManualPo::find($request->id);
             $manualpo->buyer_id = $request->buyer_id;
             $manualpo->vendor_id = $request->vendor_id;
             $manualpo->	note = $request->note;

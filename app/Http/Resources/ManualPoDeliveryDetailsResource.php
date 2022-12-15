@@ -40,6 +40,8 @@ class ManualPoDeliveryDetailsResource extends JsonResource
             "country_of_origin"         => $this->country_of_origin ?? "",
             "ex_factor_date"            => $this->ex_factor_date ?? "",
             "care_label_date"           => $this->care_label_date ?? "",
+            "created_at"                => $this->created_at ?? "",
+            "updated_at"                => $this->updated_at ?? "",
         ]);
     }
 }
