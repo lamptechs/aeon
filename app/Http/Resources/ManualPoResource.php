@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ManualPoDeliveryDetails;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ManualPoResource extends JsonResource
@@ -51,6 +52,8 @@ class ManualPoResource extends JsonResource
             "updated_at"                => $this->updated_at ?? null,
             "upload_files"              => PictureGarmentsResource::collection($this->fileInfo),
             "upload_files_artwork"      => PoArtworkResource::collection($this-> fileInfoArt),
+            "manualPoDeliveryDetails"               => ManualPoDeliveryDetailsResource::collection($this->manualpoDeliveryDetails),
+            "manualPoItemDetails"                   => ManualPoItemDetailsResource::collection($this->manualpoItemDetails),
 
 
         ]);
