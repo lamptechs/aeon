@@ -63,6 +63,7 @@ class ManualPoController extends Controller
             $manualpo->save();
             $this->saveFileInfo($request, $manualpo);
             $this->saveExtraFileInfo($request, $manualpo);
+            $this->deliveryDetails($request,$manualpo);
             DB::commit();
             $this->apiSuccess();
             $this->data = (new ManualPoResource($manualpo));
